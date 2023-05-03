@@ -95,7 +95,9 @@ void enable_click_layer(void) {
 
 // クリック用のレイヤーを無効にする。 Disable layers for clicks.
 void disable_click_layer(void) {
-//    SEND_STRING(SS_TAP(X_F18));
+    if (is_clickable_mode) {
+      SEND_STRING(SS_TAP(X_F18));
+    }
     state = NONE;
     layer_off(click_layer);
     scroll_v_mouse_interval_counter = 0;
@@ -302,7 +304,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 
             case CLICKABLE:
                 if (timer_elapsed(click_timer) > to_reset_time) {
-                        SEND_STRING(SS_TAP(X_F18));
+//                        SEND_STRING(SS_TAP(X_F18));
                         disable_click_layer();
                 }
                 break;
